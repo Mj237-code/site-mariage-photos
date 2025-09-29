@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partagez vos photos - Gedeonne & Julien</title>
+  <meta name="description" content="Partagez vos photos du mariage de Gedeonne & Julien. Contribuez à notre album souvenir en déposant vos plus belles photos.">
+  <meta property="og:title" content="Photos Mariage - Gedeonne & Julien">
+  <meta property="og:description" content="Partagez vos photos de notre jour magique">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 0.8s ease-out;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center h-screen">
+
+  <!-- Bouton mode sombre -->
+  <button id="themeToggle" class="absolute top-4 right-4 text-gray-600 bg-white p-2 rounded-full shadow-lg hover:bg-gray-100 transition">🌙</button>
+
+  <div class="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md animate-fade-in mx-4">
+    <!-- Date du mariage -->
+    <p class="text-pink-500 font-semibold mb-2">15 Juin 2024</p>
+    
+    <!-- Icônes décoratives -->
+    <div class="flex justify-center space-x-4 mb-4 text-2xl">
+      <span>💍</span>
+      <span>❤️</span>
+      <span>📷</span>
+    </div>
+
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">📸 Partagez vos photos</h1>
+    <p class="text-gray-600 mb-6">Aidez-nous à garder en souvenir ce jour magique.<br>
+    Scannez le QR Code ou cliquez ci-dessous pour déposer vos photos.</p>
+
+    <!-- QR Code -->
+    <img src="qr_mariage.png" alt="QR Code Mariage" class="mx-auto mb-6 w-48 h-48">
+
+    <!-- Bouton vers l'espace de partage -->
+    <a href="https://drive.google.com/drive/folders/1quA6w1w5KgvCrSYoD4dcsUrd5K6OwvrT?usp=sharing" target="_blank"
+       class="bg-pink-500 text-white px-6 py-3 rounded-lg shadow hover:bg-pink-600 transition transform hover:scale-105 duration-300 font-semibold block"
+       id="uploadBtn">
+      <span id="btnText">📸 Déposer mes photos</span>
+      <span id="btnLoading" class="hidden">⏳ Redirection...</span>
+    </a>
+
+    <!-- Compteur de photos -->
+    <p class="text-sm text-gray-500 mt-4">📊 Déjà <span id="photoCount">XX</span> photos partagées !</p>
+
+    <!-- Message personnalisé -->
+    <div class="bg-pink-50 p-4 rounded-lg mt-6">
+      <p class="text-sm text-gray-700 italic">"Merci de contribuer à notre album souvenir ! Chaque photo est précieuse."</p>
+      <p class="text-xs text-gray-600 mt-2">- Gedeonne & Julien</p>
+    </div>
+  </div>
+
+  <script>
+    // Gestion du mode sombre
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark');
+      if (document.body.classList.contains('dark')) {
+        document.body.className = 'bg-gradient-to-r from-gray-800 via-gray-900 to-black flex items-center justify-center h-screen text-white';
+        document.querySelector('.bg-white').classList.replace('bg-white', 'bg-gray-800');
+        document.querySelector('.bg-white').classList.add('text-white');
+        themeToggle.textContent = '☀️';
+      } else {
+        document.body.className = 'bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center h-screen';
+        document.querySelector('.bg-gray-800').classList.replace('bg-gray-800', 'bg-white');
+        document.querySelector('.bg-white').classList.remove('text-white');
+        themeToggle.textContent = '🌙';
+      }
+    });
+
+    // Confirmation avant redirection
+    document.getElementById('uploadBtn').addEventListener('click', function(e) {
+      if(!confirm('Vous allez être redirigé vers Google Drive. Souhaitez-vous continuer ?')) {
+        e.preventDefault();
+        return;
+      }
+      
+      // Animation de chargement
+      document.getElementById('btnText').classList.add('hidden');
+      document.getElementById('btnLoading').classList.remove('hidden');
+      
+      // Réinitialiser après 3 secondes au cas où la redirection échoue
+      setTimeout(() => {
+        document.getElementById('btnText').classList.remove('hidden');
+        document.getElementById('btnLoading').classList.add('hidden');
+      }, 3000);
+    });
+
+    // Protection contre le clic droit (optionnel - décommentez si souhaité)
+    /*
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      alert('Merci de ne pas télécharger les photos sans autorisation ❤️');
+    });
+    */
+
+    // Simulation compteur de photos (à remplacer par une vraie valeur si possible)
+    document.getElementById('photoCount').textContent = Math.floor(Math.random() * 50) + 20;
+  </script>
+
+</body>
+</html>
